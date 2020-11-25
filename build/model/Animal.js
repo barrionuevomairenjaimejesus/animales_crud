@@ -41,6 +41,13 @@ class Animal {
         }
         this._peso = _peso;
     }
+    /* curar(){
+         if (this._curado==false){
+             this._curado==true
+         }
+ 
+     }
+ */
     jaula() {
         let jaula;
         jaula = this._altura * 2;

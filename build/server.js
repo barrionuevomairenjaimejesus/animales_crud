@@ -61,7 +61,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                 break;
             case 4:
                 console.log("Si has entrado en esta opción es hora de poner al animal en libertad");
-                curado = true;
+                animal.curado == true;
                 break;
             case 5:
                 yield database_1.db.conectarBD();
@@ -103,38 +103,34 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                 });
                 yield database_1.db.desconectarBD();
                 break;
-            case 7:
-                do {
-                    n = yield menu_1.menuAnimales2();
-                    switch (n) {
-                        case 1:
-                            try {
-                                let jaula = animal.jaula();
-                                console.log(`Necesitaremos una jaula de ${jaula} m2`);
-                            }
-                            catch (e) {
-                                console.log("No tenemos datos del animal: " + e); //  Con el + e mandamos el error por consola 
-                            }
-                            break;
-                        case 2:
-                            try {
-                                let comida = animal.comida();
-                                console.log(`Para ese animal necesitaremos ${comida} kilos de comida`);
-                            }
-                            catch (e) {
-                                console.log("No tenemos datos del animal: " + e);
-                            }
-                            break;
-                        case 3:
-                            break;
-                        default:
-                            console.log("No has elegido una opción valida.Por favor vuelve a intentarlo");
-                            break;
-                    }
-                    while (n != 0)
-                        ;
-                } while ();
-                break;
+                /*      case 7:
+                          do {
+                              n = await menuAnimales2()
+                              switch(n){
+                              case 1:
+                                  try{
+                                      let jaula = animal.jaula()
+                                      console.log(`Necesitaremos una jaula de ${jaula} m2`)
+                                  }catch (e){
+                                      console.log("No tenemos datos del animal: " + e) //  Con el + e mandamos el error por consola
+                                  }
+                              break
+                              case 2:
+                                  try{
+                                      let comida = animal.comida()
+                                      console.log(`Para ese animal necesitaremos ${comida} kilos de comida`)
+                                  }catch (e){
+                                      console.log("No tenemos datos del animal: " + e)
+                                  }
+                              break
+                              case 3:
+                              break
+                              default:
+                          console.log("No has elegido una opción valida.Por favor vuelve a intentarlo")
+                          break
+                          } while (n != 0);
+                      }
+                 */ break;
             case 8:
                 yield database_1.db.conectarBD();
                 yield Animal_1.Animales.findOneAndDelete({ _nombre: animal.nombre }, (err, doc) => {

@@ -43,16 +43,27 @@ export class Animal{
     }
 
     set altura(_altura: number){
-        if (_altura <= -1){
+        if (_altura <= -0.1){ //Uso -0.1 para que los animales que midan 0.4 metros por ejemplo entren en la BD
             throw "ERROR!! Un animal debe de medir algo para poder existir"
         }
         this._altura = _altura
     }
     set peso(_peso: number){
-        if (_peso <= -1){
+        if (_peso <= -0.1){ //Uso -0.1 para que los animales que pesen 0.4 kilos por ejemplo entren en la BD
             throw "ERROR!! Un animal debe de pesar algo para existir"
         }
         this._peso = _peso
+    }
+//Comenzamos a hacer todos los metodos que usaremos 
+
+ curar(){ //Con esto solo tendremos que cambiar el estado del animal para poder liberarlo (es un campo boolean) 
+        if (this._curado==false){
+            this._curado==true
+            return "Estado de animal cambiado, listo para libreación"
+        } else {
+            return "Algo ha salido mal"
+        }
+
     }
 
     jaula(){
@@ -119,7 +130,7 @@ export type tAnimal = {
 const animalSchema = new Schema({
     _nombre: {
         type: String,
-        unique: true 
+        unique: true //Suponemos que nombre solo hay uno y único
     },
     _especie: String,
     _peso: Number,
@@ -127,7 +138,7 @@ const animalSchema = new Schema({
     _curado: Boolean,
     _operaciones: {
         type: Number,
-        max: 8
+        max: 8 //Si el animal necesita más de 8 operaciones este refugio no podrá hacerse cargo de el.
     }
 })
 
