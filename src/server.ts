@@ -11,15 +11,13 @@ const main = async () => {
     let animal: Animal = new Animal("","",0,0,false,0)
 
 
-    await setBD(false) // true BD local; false BD Atlas
+    await setBD(false) 
 
     do {
         n = await menuAnimales()
 
         switch(n){
-            case 0:
-                console.log('Cerrando la aplicacion . . . ') //Solo nos sirve para salir del menú rapido
-                break
+            
             case 1:
                 //Inntroducimos todos los datos por teclado de nuestro nuevo animal
                 nombre = await leerTeclado('Mote/nombre del animal adoptado ')
@@ -36,7 +34,8 @@ const main = async () => {
                     animal = new Animal("","",0,0,false,0)
                 }
                 break
-            case 2:
+    /*    
+        case 2:
                 //Buscaremos el animal en la base de datos y cambiará el estado de curado a verdadero.
                 console.log("Si has entrado en esta opción es hora de poner al animal en libertad")
                 await db.conectarBD()
@@ -47,12 +46,18 @@ const main = async () => {
                         else{
                             if (doc == null) console.log('Ese animal ha sido liberado o no se encuentra')
                             else {
-                                animal.curado==true
+                                try{
+                                    let curar = animal.curar()
+                                    console.log(`${curar}`)
+                                }catch (e){
+                                    console.log("No tenemos datos del animal: " + e)
+                                }
                             }
                         }
                     } )
                 break
-            case 3:
+        */        
+            case 2:
                 //Guardaremos el animal que hemos introducido con la opción 1
                 await db.conectarBD()
                 const dSchema = {
@@ -70,7 +75,7 @@ const main = async () => {
 
                 await db.desconectarBD()
                 break
-            case 4:
+            case 3:
                 await db.conectarBD()
                 nombre = await leerTeclado('Nombre del animal (no la especie)')
                 await Animales.findOne( {_nombre: nombre}, //Buscamos en nuestra base de datos con un findOne para obtener un solo documento
@@ -89,56 +94,7 @@ const main = async () => {
                     } )
                 await db.desconectarBD()
                 break
-      /*      case 5:
-                do {
-                    n = await menuAnimales2()
-                    switch(n){
-                     case 0:
-                        console.log('Cerrando la aplicacion . . . ')
-                    break
-                    case 1:
-                        try{
-                            let jaula = animal.jaula()
-                            console.log(`Necesitaremos una jaula de ${jaula} m2`)
-                        }catch (e){
-                            console.log("No tenemos datos del animal: " + e) //  Con el + e mandamos el error por consola 
-                        }
-                    break
-                    case 2:
-                        try{
-                            let comida = animal.comida()
-                            console.log(`Para ese animal necesitaremos ${comida} kilos de comida`)
-                        }catch (e){
-                            console.log("No tenemos datos del animal: " + e)
-                        }
-                    break
-                    case 3:
-                         try{
-                    let precomida = animal.precioComida()
-                    console.log(`Para ese animal necesitaremos ${precomida} euros en comida`)
-                }catch (e){
-                    console.log("No tenemos datos del animal: " + e)
-                }
-                try{
-                    let preoperacion = animal.precioOperacion()
-                    console.log(`Para ese animal necesitaremos ${preoperacion} € para sus operaciones`)
-                }catch (e){
-                    console.log("No tenemos datos del animal: " + e)
-                }
-                try{
-                    let total = animal.total()
-                    console.log(`Para ese animal necesitaremos ${total} € para su mantenimiento`)
-                }catch (e){
-                    console.log("No tenemos datos del animal: " + e)
-                }
-                    break
-                    default:
-                console.log("No has elegido una opción valida.Por favor vuelve a intentarlo")
-                break
-                } while (n != 0);
-            }
-       */     break
-            case 6:
+            case 4:
                 await db.conectarBD()
                 await Animales.findOneAndDelete( //Hacemos una busqueda, con este operador al encontrarlo lo eliminará
                     { _nombre: animal.nombre },  //La busqueda la vaa hacer a través del nombre
@@ -150,11 +106,64 @@ const main = async () => {
                         }
                     })
                 await db.desconectarBD()
-                break                   
+                break 
+            case 5:
+                    do {
+                        n = await menuAnimales2()
+                        switch(n){
+                         case 0:
+                            console.log('Cerrando la aplicacion . . . ')
+                        break
+                        case 1:
+                            try{
+                                let jaula = animal.jaula()
+                                console.log(`Necesitaremos una jaula de ${jaula} m2`)
+                            }catch (e){
+                                console.log("No tenemos datos del animal: " + e) //  Con el + e mandamos el error por consola 
+                            }
+                        break
+                        case 2:
+                            try{
+                                let comida = animal.comida()
+                                console.log(`Para ese animal necesitaremos ${comida} kilos de comida`)
+                            }catch (e){
+                                console.log("No tenemos datos del animal: " + e)
+                            }
+                        break
+                        case 3:
+                             try{
+                        let precomida = animal.precioComida()
+                        console.log(`Para ese animal necesitaremos ${precomida} euros en comida`)
+                    }catch (e){
+                        console.log("No tenemos datos del animal: " + e)
+                    }
+                    try{
+                        let preoperacion = animal.precioOperacion()
+                        console.log(`Para ese animal necesitaremos ${preoperacion} € para sus operaciones`)
+                    }catch (e){
+                        console.log("No tenemos datos del animal: " + e)
+                    }
+                    try{
+                        let total = animal.total()
+                        console.log(`Para ese animal necesitaremos ${total} € para su mantenimiento`)
+                    }catch (e){
+                        console.log("No tenemos datos del animal: " + e)
+                    }
+                        break
+                        default:
+                    console.log("No has elegido una opción valida.Por favor vuelve a intentarlo")
+                    break
+                    } 
+                }while (n != 0);
+            break  //ERROR QUE NO ENTIENDO  
+            case 0:
+                console.log('Cerrando la aplicacion . . . ') //Solo nos sirve para salir del menú rapido
+            break
             default:
                 console.log("No has elegido una opción valida.Por favor vuelve a intentarlo") //Si no se introduce un caso de switch viene siempre a esta parte 
                 break
         }
+        
     }while (n != 0)
 }
 

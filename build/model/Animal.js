@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Animales = exports.Animal = void 0;
 const mongoose_1 = require("mongoose");
 class Animal {
-    constructor(_nombre, _especie, _peso, _altura, _curado, _operaciones) {
-        this._nombre = _nombre;
-        this._especie = _especie;
-        this._peso = _peso;
-        this._altura = _altura;
-        this._curado = _curado;
-        this._operaciones = _operaciones;
+    constructor(nombre, especie, peso, altura, curado, operaciones) {
+        this._nombre = nombre;
+        this._especie = especie;
+        this._peso = peso;
+        this._altura = altura;
+        this._curado = false;
+        this._operaciones = operaciones;
     }
     get nombre() {
         return this._nombre;
@@ -30,24 +30,30 @@ class Animal {
         return this._operaciones;
     }
     set altura(_altura) {
-        if (_altura <= -1) {
+        if (_altura <= -0.1) { //Uso -0.1 para que los animales que midan 0.4 metros por ejemplo entren en la BD
             throw "ERROR!! Un animal debe de medir algo para poder existir";
         }
         this._altura = _altura;
     }
     set peso(_peso) {
-        if (_peso <= -1) {
+        if (_peso <= -0.1) { //Uso -0.1 para que los animales que pesen 0.4 kilos por ejemplo entren en la BD
             throw "ERROR!! Un animal debe de pesar algo para existir";
         }
         this._peso = _peso;
     }
-    /* curar(){
-         if (this._curado==false){
-             this._curado==true
-         }
- 
-     }
- */
+    //Comenzamos a hacer todos los metodos que usaremos 
+    /*
+     curar(){ //Con esto solo tendremos que cambiar el estado del animal para poder liberarlo (es un campo boolean)
+        let curar2=this._curado    //MÉTODO QUE NO FUNCIONA
+        if (this._curado==false){
+                curar2= true
+                return "Estado de animal cambiado, listo para liberación"
+            } else {
+                return "Algo ha salido mal"
+            }
+    
+        }
+    */
     jaula() {
         let jaula;
         jaula = this._altura * 2;
@@ -97,7 +103,7 @@ exports.Animal = Animal;
 const animalSchema = new mongoose_1.Schema({
     _nombre: {
         type: String,
-        unique: true
+        unique: true //Suponemos que nombre solo hay uno y único
     },
     _especie: String,
     _peso: Number,
@@ -105,7 +111,7 @@ const animalSchema = new mongoose_1.Schema({
     _curado: Boolean,
     _operaciones: {
         type: Number,
-        max: 8
+        max: 8 //Si el animal necesita más de 8 operaciones este refugio no podrá hacerse cargo de el.
     }
 });
 exports.Animales = mongoose_1.model('Animales', animalSchema);

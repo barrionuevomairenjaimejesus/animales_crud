@@ -8,14 +8,14 @@ export class Animal{
     private _curado: boolean
     private _operaciones: number
 
-    constructor(_nombre:string, _especie: string, _peso : number, _altura : number, _curado : boolean, _operaciones: number
+    constructor(nombre:string, especie: string, peso : number, altura : number, curado : boolean, operaciones: number
         ){
-        this._nombre = _nombre
-        this._especie = _especie
-        this._peso = _peso
-        this._altura = _altura
-        this._curado = _curado
-        this._operaciones = _operaciones
+        this._nombre = nombre
+        this._especie = especie
+        this._peso = peso
+        this._altura = altura
+        this._curado = false
+        this._operaciones = operaciones
     }
 
     get nombre(){
@@ -56,15 +56,18 @@ export class Animal{
     }
 //Comenzamos a hacer todos los metodos que usaremos 
 
+/*
  curar(){ //Con esto solo tendremos que cambiar el estado del animal para poder liberarlo (es un campo boolean) 
-        if (this._curado==false){
-            this._curado==true
-            return "Estado de animal cambiado, listo para libreación"
+    let curar2=this._curado    //MÉTODO QUE NO FUNCIONA
+    if (this._curado==false){
+            curar2= true
+            return "Estado de animal cambiado, listo para liberación"
         } else {
             return "Algo ha salido mal"
         }
 
     }
+*/
 
     jaula(){
         let jaula: number
